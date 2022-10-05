@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<meta charset="utf-8">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:site" content="@jasondavies">
+<meta property="og:title" content="World Airports Voronoi">
+<meta property="og:description" content="The major airports of the world and their closest regions.">
+<meta property="og:image" content="https://www.jasondavies.com/maps/voronoi/airports/full.png">
+<title>World Airports Voronoi</title>
+<style>
+
+@import url(../../maps.css);
+
+path {
+  stroke-linejoin: round;
+}
+
+.land {
+  fill: #ccc;
+}
+
+.countries {
+  fill: none;
+  stroke: #fff;
+}
+
+.voronoi {
+  fill-opacity: .5;
+  stroke: #000;
+  stroke-width: .5px;
+  pointer-events: all;
+}
+
+.voronoi:hover {
+  fill: #ff0 !important;
+}
+
+.points {
+  pointer-events: none;
+}
+
+.remote-radius {
+  stroke: #f00;
+  stroke-width: 1.5px;
+  fill: none;
+}
+
+.graticule {
+  stroke: #999;
+  stroke-width: .5px;
+  fill: none;
+}
+
+.outline {
+  stroke: #000;
+  stroke-width: 1.5px;
+  fill: none;
+}
+
+#remote-point-coordinates, #remote-point-distance, #remote-airport-coordinates, #remote-airport-distance {
+  font-weight: bold;
+}
+
+.remote .voronoi {
+  stroke: none;
+  fill: none !important;
+}
+
+.remote .voronoi:hover {
+  stroke: #000;
+  fill: #ff0 !important;
+}
+
+p.cite {
+  text-align: center;
+}
+
+</style>
+<p class="breadcrumbs"><a href="../../../index.html">Jason Davies</a> → <a href="../../index.html">Maps</a> → <a href="../index.html">Spherical Voronoi Diagrams</a>
+
+<h1>World Airports Voronoi</h1>
+
+<div id="map"></div>
+<p class="cite">2,980 large and medium airports with scheduled services from <a href="http://ourairports.com/data/">OurAirports</a>.
+
+<div class="wrapper">
+  <p>Each region is closer to a particular airport than any other.
+  This partitioning of the sphere is called a spherical <a href="http://en.wikipedia.org/wiki/Voronoi_diagram">Voronoi diagram</a>.
+
+  <h2>Most Remote Point</h2>
+  <p>The point at <span id="remote-point-coordinates">…</span> is furthest away from any airport in the above dataset; <span id="remote-point-distance">…</span> from the nearest three airports.
+</div>
+
+<div id="remote-point"></div>
+
+<div class="wrapper">
+  <p>This is the <a href="http://mathworld.wolfram.com/Circumcenter.html">circumcentre</a> of the <a href="http://en.wikipedia.org/wiki/Delaunay_triangulation">Delaunay triangle</a> with the largest <a href="http://mathworld.wolfram.com/Circumcircle.html">circumcircle</a> radius.
+  <p>There <i>are</i> in fact airports on Antarctica, but they are not classed as medium or large, and do not have scheduled services according to this dataset.
+</div>
+
+<div class="wrapper">
+  <h2>Most Remote Airport</h2>
+  <p><span id="remote-airport-name">…</span> at <span id="remote-airport-coordinates">…</span> is the most remote; <span id="remote-airport-distance"></span> from the nearest airport, <span id="remote-airport-neighbour"></span>.
+</div>
+
+<div id="remote-airport"></div>
+
+<div class="wrapper">
+  <p>Copyright &copy; <a href="../../../toys/index.html">Jason Davies</a> 2015.
+</div>
+
+<script src="../../../d3.min.js"></script>
+<script src="../../../queue.min.js"></script>
+<script src="../../topojson.min.js"></script>
+<script src="maxapp.js"></script>

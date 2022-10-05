@@ -565,5 +565,5 @@ function() {
         l = d3.selectAll("#remote-point, #remote-airport").append("svg").attr("class", "remote").attr("width", 2 * s).attr("height", 2 * s),
         d = d3.selectAll("svg").data([u, null, null]),
         f = d3.scale.category20b();
-    queue().defer(d3.json, "https://raw.githubusercontent.com/ClayShoaf/opencpi/main/world-110m.json").defer(d3.csv, "https://raw.githubusercontent.com/ClayShoaf/opencpi/main/airports.csv").await(t)
+    queue().defer(d3.json, "https://raw.githubusercontent.com/ClayShoaf/opencpi/main/world-110m.json").defer(d3.csv, "https://raw.githubusercontent.com/ClayShoaf/myLittleWeatherProject/main/dailydata/18650101.csv").await(t)
 }();

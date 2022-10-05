@@ -1,6 +1,8 @@
 inNum=$1
-BtoGmin=-900
-BtoGmax=40
+BtoTmin=-900
+BtoTmax=-17
+TtoGmin=-18
+TtoGmax=40
 GtoYmin=41
 GtoYmax=240
 YtoRmin=241
@@ -10,8 +12,11 @@ outMin=0
 outMax=255
 outNum=0
 
-if [ "$inNum" -ge $BtoGmin ] && [ "$inNum" -le $BtoGmax ]; then
-	outNum=$(printf %.0f $(bc <<<"scale=20; 255 - ($outMin + (($outMax - $outMin) / ($BtoGmax - $BtoGmin)) * ($inNum - $BtoGmin))"))
+if [ "$inNum" -ge $BtoTmin ] && [ "$inNum" -le $BtoTmax ]; then
+	outNum=$(printf %.0f $(bc <<<"scale=20; ($outMin + (($outMax - $outMin) / ($BtoTmax - $BtoTmin)) * ($inNum - $BtoTmin))"))
+	echo "#00$(printf '%02x\n' $outNum)ff"
+elif [ "$inNum" -ge $TtoGmin ] && [ "$inNum" -le $TtoGmax ]; then
+	outNum=$(printf %.0f $(bc <<<"scale=20; 255 - ($outMin + (($outMax - $outMin) / ($TtoGmax - $TtoGmin)) * ($inNum - $TtoGmin))"))
 	echo "#00ff$(printf '%02x\n' $outNum)"
 elif [ "$inNum" -ge $GtoYmin ] && [ "$inNum" -le $GtoYmax ]; then
 	outNum=$(printf %.0f $(bc <<<"scale=20; $outMin + (($outMax - $outMin) / ($GtoYmax - $GtoYmin)) * ($inNum - $GtoYmin)"))
@@ -25,5 +30,5 @@ fi
 #printf "%02x\n" $outNum
 
 #lesson 4, question 17: 175A
-#output = $outMin + (($outMax - $outMin) / ($BtoGmax - $BtoGmin)) * ($inNum - $BtoGmin)
+#output = $outMin + (($outMax - $outMin) / ($TtoGmax - $TtoGmin)) * ($inNum - $TtoGmin)
 #output = output_start + ((output_end - output_start) / (input_end - input_start)) * (input - input_start)

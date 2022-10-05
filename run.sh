@@ -1,7 +1,7 @@
 inNum=$1
 BtoTmin=-900
-BtoTmax=-179
-TtoGmin=-180
+BtoTmax=0
+TtoGmin=1
 TtoGmax=40
 GtoYmin=41
 GtoYmax=240

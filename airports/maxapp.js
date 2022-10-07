@@ -562,7 +562,7 @@ function() {
         o = 480,
         s = 250,
 	// This is the starting point
-        c = d3.geo.orthographic().clipAngle(90).precision(.1).translate([o, o]).scale(o - 1).rotate([0, -15]),
+        c = d3.geo.orthographic().clipAngle(90).precision(.1).translate([o, o]).scale(o - 1).rotate([85, -15]),
         u = d3.geo.path().projection(c).pointRadius(1),
         h = d3.selectAll("#map").append("svg").attr("width", 2 * o).attr("height", 2 * o),
         l = d3.selectAll("#remote-point, #remote-airport").append("svg").attr("class", "remote").attr("width", 2 * s).attr("height", 2 * s),

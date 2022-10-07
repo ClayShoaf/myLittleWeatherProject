@@ -113,7 +113,7 @@
                 type: "zoomend"
             })
         }
-        var d, f, p, g = 999,
+        var d, f, p, g = 0,
             v = h(m, "zoomstart", "zoom", "zoomend"),
             m = d3.behavior.zoom().on("zoomstart", function() {
                 var i = d3.mouse(this),
@@ -467,9 +467,6 @@ function() {
         var p = u.map(function(t) {
             return t.name
         });
-	var kolor = u.map(function(t) {return t.color});
-//	console.log("DEBUG: kolor")
-//	console.log(kolor)
         u = u.map(function(t) {
             return [+t.longitude, +t.latitude]
         });
@@ -510,7 +507,6 @@ function() {
                 origin: u[x],
                 radius: z
             }]);
-	var counter = -1;
         w.append("path").datum(function(t) {
             return k.angle(t.radius * a).origin(t.origin)()
         }).attr("class", "remote-radius"), w.append("path").datum(function(t) {
@@ -521,23 +517,10 @@ function() {
         }).attr("class", "remote-radius"), l.append("path").datum({
             type: "Sphere"
         }).attr("class", "outline"), d.selectAll(".voronoi").data(b).enter().insert("path", ".points").attr("class", "voronoi").style("fill", function(shit) {
-	    counter += 1
-	    if (counter >= b.length) {counter = 0}
-//	    console.log(counter)
-//	    console.log("DEBUG: shit")
-//	    console.log(shit)
-//	    console.log("DEBUG: kolor")
-//	    console.log(kolor)
-//	    console.log("DEBUG: kolor[counter]")
-//	    console.log(kolor[counter])
-//	    console.log("DEBUG: b")
-//	    console.log(b)
-//	    console.log("DEBUG: b[counter]")
-//	    console.log(b[counter])
-//	    console.log("AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA")
-            return kolor[counter]
-        }
-	).append("title").text(function(t, n) {
+            return shit ? f(shit.color = d3.max(shit.neighbors, function(t) {
+                return b[t].color
+            }) + 1 | 0) : null
+        }).append("title").text(function(t, n) {
             return p[n]
         }), d.each(n), h.call(d3.geo.zoom().projection(c).scaleExtent([c.scale(), 8 * c.scale()]).on("zoom.redraw", function() {
             h.each(n)
@@ -555,20 +538,15 @@ function() {
     function r(t) {
         return i(Math.abs(t[1])) + "\xb0" + (t[1] > 0 ? "N" : "S") + ", " + i(Math.abs(t[0])) + "\xb0" + (t[0] > 0 ? "E" : "W")
     }
-	// I added this ###########################
-	d3.select("svg").remove();
     var a = 180 / Math.PI,
         i = d3.format(",f"),
         o = 480,
         s = 250,
-	// This is the starting point
-        c = d3.geo.orthographic().clipAngle(90).precision(.1).translate([o, o]).scale(o - 1).rotate([0, -15]),
+        c = d3.geo.orthographic().clipAngle(90).precision(.1).translate([o, o]).scale(o - 1).rotate([85, -15]),
         u = d3.geo.path().projection(c).pointRadius(1),
         h = d3.selectAll("#map").append("svg").attr("width", 2 * o).attr("height", 2 * o),
         l = d3.selectAll("#remote-point, #remote-airport").append("svg").attr("class", "remote").attr("width", 2 * s).attr("height", 2 * s),
         d = d3.selectAll("svg").data([u, null, null]),
         f = d3.scale.category20b();
-	// I added this ###########################
-	poopoo = "https://raw.githubusercontent.com/ClayShoaf/myLittleWeatherProject/main/dailydata/" + peepee + ".csv";
-    queue().defer(d3.json, "https://raw.githubusercontent.com/ClayShoaf/opencpi/main/world-110m.json").defer(d3.csv, poopoo).await(t)
+    queue().defer(d3.json, "../../world-110m.json").defer(d3.csv, "airports.csv").await(t)
 }();

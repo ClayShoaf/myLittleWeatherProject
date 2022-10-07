@@ -113,7 +113,7 @@
                 type: "zoomend"
             })
         }
-        var d, f, p, g = 999,
+        var d, f, p, g = 0,
             v = h(m, "zoomstart", "zoom", "zoomend"),
             m = d3.behavior.zoom().on("zoomstart", function() {
                 var i = d3.mouse(this),
@@ -461,18 +461,30 @@ function() {
 }(),
 function() {
     function t(t, o, u) {
+//	console.log(d)
+//	console.log("DEBUG: d")
         d.append("path").datum(topojson.feature(o, o.objects.land)).attr("class", "land"), d.append("path").datum(topojson.mesh(o, o.objects.countries, function(t, n) {
             return t !== n
         })).attr("class", "countries"), l.append("path").datum(d3.geo.graticule()).attr("class", "graticule");
+	console.log(u)
+	console.log("DEBUG: u")
         var p = u.map(function(t) {
+//	    console.log(u)
+//	    console.log("DEBUG: u")
+//	    console.log(t)
+//	    console.log("DEBUG: t")
             return t.name
         });
 	var kolor = u.map(function(t) {return t.color});
-//	console.log("DEBUG: kolor")
-//	console.log(kolor)
+	console.log(kolor)
+	console.log("DEBUG: kolor")
         u = u.map(function(t) {
             return [+t.longitude, +t.latitude]
         });
+	console.log(p)
+	console.log("DEBUG: p")
+	console.log(u)
+	console.log("DEBUG: u2")
         var g = {
             type: "MultiPoint",
             coordinates: u
@@ -510,7 +522,6 @@ function() {
                 origin: u[x],
                 radius: z
             }]);
-	var counter = -1;
         w.append("path").datum(function(t) {
             return k.angle(t.radius * a).origin(t.origin)()
         }).attr("class", "remote-radius"), w.append("path").datum(function(t) {
@@ -518,26 +529,77 @@ function() {
                 type: "Point",
                 coordinates: t.origin
             }
-        }).attr("class", "remote-radius"), l.append("path").datum({
-            type: "Sphere"
-        }).attr("class", "outline"), d.selectAll(".voronoi").data(b).enter().insert("path", ".points").attr("class", "voronoi").style("fill", function(shit) {
-	    counter += 1
-	    if (counter >= b.length) {counter = 0}
-//	    console.log(counter)
-//	    console.log("DEBUG: shit")
-//	    console.log(shit)
-//	    console.log("DEBUG: kolor")
-//	    console.log(kolor)
-//	    console.log("DEBUG: kolor[counter]")
-//	    console.log(kolor[counter])
-//	    console.log("DEBUG: b")
-//	    console.log(b)
-//	    console.log("DEBUG: b[counter]")
-//	    console.log(b[counter])
-//	    console.log("AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA")
-            return kolor[counter]
+        }).attr("class", "remote-radius"), 
+	l.append("path").datum({type: "Sphere"}).attr("class", "outline"), 
+	console.log(u)
+	console.log("DEBUG: u3")
+	console.log(b)
+	console.log("DEBUG: b")
+	console.log("DEBUG: kolor"),
+	console.log(parseInt(kolor[t])),
+	d.selectAll(".voronoi").data(b).enter().insert("path", ".points").attr("class", "voronoi").style("fill", function(t) {
+//	    console.log("######################")
+//	    console.log(a)
+//	    console.log("DEBUG: a")
+	    console.log(b)
+	    console.log("DEBUG: b")
+//	    console.log(c)
+//	    console.log("DEBUG: c")
+//	    console.log(d)
+//	    console.log("DEBUG: d")
+//	    console.log(e)
+//	    console.log("DEBUG: e")
+//	    console.log(f)
+//	    console.log("DEBUG: f")
+//	    console.log(g)
+//	    console.log("DEBUG: g")
+//	    console.log(h)
+//	    console.log("DEBUG: h")
+//	    console.log(i)
+//	    console.log("DEBUG: i")
+//	    console.log(k)
+//	    console.log("DEBUG: k")
+//	    console.log(l)
+//	    console.log("DEBUG: l")
+//	    console.log(m)
+//	    console.log("DEBUG: m")
+//	    console.log(n)
+//	    console.log("DEBUG: n")
+//	    console.log(o)
+//	    console.log("DEBUG: o")
+//	    console.log(p)
+//	    console.log("DEBUG: p")
+	    console.log(t.color)
+	    console.log("DEBUG: t.color")
+	    console.log(t)
+	    console.log("DEBUG: t")
+//	    console.log(u)
+//	    console.log("DEBUG: u")
+//	    console.log(v)
+//	    console.log("DEBUG: v")
+//	    console.log(w)
+//	    console.log("DEBUG: w")
+//	    console.log(x)
+//	    console.log("DEBUG: x")
+//	    console.log(y)
+//	    console.log("DEBUG: y")
+//	    console.log(z)
+//	    console.log("DEBUG: z")
+//	    console.log("######################")
+            return t ? f(t.color = Math.floor(Math.random() * 999999999),
+	    console.log(kolor),
+	    console.log("DEBUG: kolor"),
+	    console.log(parseInt(kolor[t])),
+	    console.log("DEBUG: kolor[t]"),
+	    console.log(p[t]),
+	    console.log("DEBUG: p[t]")
+//                return b[t].color
+//            }) + 1 | 0,
+//	    console.log(t.color), 
+//	    console.log("DEBUG: t.color") 
+	    ) : null
         }
-	).append("title").text(function(t, n) {
+).append("title").text(function(t, n) {
             return p[n]
         }), d.each(n), h.call(d3.geo.zoom().projection(c).scaleExtent([c.scale(), 8 * c.scale()]).on("zoom.redraw", function() {
             h.each(n)
@@ -555,20 +617,19 @@ function() {
     function r(t) {
         return i(Math.abs(t[1])) + "\xb0" + (t[1] > 0 ? "N" : "S") + ", " + i(Math.abs(t[0])) + "\xb0" + (t[0] > 0 ? "E" : "W")
     }
-	// I added this ###########################
-	d3.select("svg").remove();
     var a = 180 / Math.PI,
         i = d3.format(",f"),
         o = 480,
         s = 250,
-	// This is the starting point
-        c = d3.geo.orthographic().clipAngle(90).precision(.1).translate([o, o]).scale(o - 1).rotate([0, -15]),
+        c = d3.geo.orthographic().clipAngle(90).precision(.1).translate([o, o]).scale(o - 1).rotate([85, -15]),
         u = d3.geo.path().projection(c).pointRadius(1),
         h = d3.selectAll("#map").append("svg").attr("width", 2 * o).attr("height", 2 * o),
         l = d3.selectAll("#remote-point, #remote-airport").append("svg").attr("class", "remote").attr("width", 2 * s).attr("height", 2 * s),
         d = d3.selectAll("svg").data([u, null, null]),
         f = d3.scale.category20b();
-	// I added this ###########################
-	poopoo = "https://raw.githubusercontent.com/ClayShoaf/myLittleWeatherProject/main/dailydata/" + peepee + ".csv";
-    queue().defer(d3.json, "https://raw.githubusercontent.com/ClayShoaf/opencpi/main/world-110m.json").defer(d3.csv, poopoo).await(t)
+    queue().defer(d3.json, "https://raw.githubusercontent.com/ClayShoaf/opencpi/main/world-110m.json").defer(d3.csv, "https://raw.githubusercontent.com/ClayShoaf/opencpi/main/airports.csv").await(t)
 }();
+
+// p - all airport names
+// u - all airport coordinates
+// t - data about the current voronoi

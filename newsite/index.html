@@ -10,106 +10,106 @@
 @import url(../../maps.css);
 
 path {
-  stroke-linejoin: round;
+	stroke-linejoin: round;
 }
 
 .land {
-  fill: #ccc;
+	fill: #ccc;
 }
 
 .countries {
-  fill: none;
-  stroke: #fff;
+	fill: none;
+	stroke: #fff;
 }
 
 .voronoi {
-  fill-opacity: .5;
-  stroke-opacity: 0;
-  stroke-width: .5px;
-  pointer-events: all;
+	fill-opacity: .5;
+	stroke-opacity: 0;
+	stroke-width: .5px;
+	pointer-events: all;
 }
 
 .voronoi:hover {
-  fill: #fff !important;
+	fill: #fff !important;
 }
 
 .points {
-  pointer-events: none;
+	pointer-events: none;
 }
 
 .remote-radius {
-  stroke: #f00;
-  stroke-width: 1.5px;
-  fill: none;
+	stroke: #f00;
+	stroke-width: 1.5px;
+	fill: none;
 }
 
 .graticule {
-  stroke: #999;
-  stroke-width: .5px;
-  fill: none;
+	stroke: #999;
+	stroke-width: .5px;
+	fill: none;
 }
 
 .outline {
-  stroke: #000;
-  stroke-width: 1.5px;
-  fill: none;
+	stroke: #000;
+	stroke-width: 1.5px;
+	fill: none;
 }
 
 #remote-point-coordinates, #remote-point-distance, #remote-airport-coordinates, #remote-airport-distance {
-  font-weight: bold;
+	font-weight: bold;
 }
 
 .remote .voronoi {
-  stroke: none;
-  fill: none !important;
+	stroke: none;
+	fill: none !important;
 }
 
 .remote .voronoi:hover {
-  stroke: #000;
-  fill: #ff0 !important;
+	stroke: #000;
+	fill: #ff0 !important;
 }
 
 p.cite {
-  text-align: center;
+	text-align: center;
 }
 
 .slidecontainer {
-  width: 100%; /* Width of the outside container */
+	width: 100%; /* Width of the outside container */
 }
 
 /* The slider itself */
 .slider {
-  -webkit-appearance: none;  /* Override default CSS styles */
-  appearance: none;
-  width: 100%; /* Full-width */
-  height: 25px; /* Specified height */
-  background: #d3d3d3; /* Grey background */
-  outline: none; /* Remove outline */
-  opacity: 0.7; /* Set transparency (for mouse-over effects on hover) */
-  -webkit-transition: .2s; /* 0.2 seconds transition on hover */
-  transition: opacity .2s;
+	-webkit-appearance: none;	/* Override default CSS styles */
+	appearance: none;
+	width: 100%; /* Full-width */
+	height: 25px; /* Specified height */
+	background: #d3d3d3; /* Grey background */
+	outline: none; /* Remove outline */
+	opacity: 0.7; /* Set transparency (for mouse-over effects on hover) */
+	-webkit-transition: .2s; /* 0.2 seconds transition on hover */
+	transition: opacity .2s;
 }
 
 /* Mouse-over effects */
 .slider:hover {
-  opacity: 1; /* Fully shown on mouse-over */
+	opacity: 1; /* Fully shown on mouse-over */
 }
 
 /* The slider handle (use -webkit- (Chrome, Opera, Safari, Edge) and -moz- (Firefox) to override default look) */
 .slider::-webkit-slider-thumb {
-  -webkit-appearance: none; /* Override default look */
-  appearance: none;
-  width: 25px; /* Set a specific slider handle width */
-  height: 25px; /* Slider handle height */
-  background: #04AA6D; /* Green background */
-  cursor: pointer; /* Cursor on hover */
+	-webkit-appearance: none; /* Override default look */
+	appearance: none;
+	width: 25px; /* Set a specific slider handle width */
+	height: 25px; /* Slider handle height */
+	background: #04AA6D; /* Green background */
+	cursor: pointer; /* Cursor on hover */
 }
 
 .slider::-moz-range-thumb {
-  width: 25px; /* Set a specific slider handle width */
-  height: 25px; /* Slider handle height */
-  background: #04AA6D; /* Green background */
-  cursor: pointer; /* Cursor on hover */
+	width: 25px; /* Set a specific slider handle width */
+	height: 25px; /* Slider handle height */
+	background: #04AA6D; /* Green background */
+	cursor: pointer; /* Cursor on hover */
 }
 
 </style>
@@ -118,64 +118,80 @@ p.cite {
 <script src="topojson.min.js"></script>
 </head>
 
+<!--
 <div class="slidecontainer">
-  <input type="range" min="18650101" max="18650131" value="18650115" class="slider" id="myRange">
-  <output id="demo">
+	<input type="range" min="18650101" max="18650131" value="18650115" class="slider" id="myRange">
+	<output id="demo">
 </div>
+-->
+
+<button onclick="playThrough()" id="shit">Test</button>
 <div id="map"></div>
 <script>
 	function load_js()
 	{
 		var head = document.getElementsByTagName('head')[0];
-	   	var script = document.createElement('script');
-	   	script.src = 'maxapp.js';
-	   	head.appendChild(script);
-	   	head.removeChild(script);
+		 	var script = document.createElement('script');
+		 	script.src = 'maxapp.js';
+		 	head.appendChild(script);
+		 	head.removeChild(script);
 	}
 
-	function remove_svg() { svg.selectAll("*").remove(); }
 
-	var slider = document.getElementById("myRange");
-	var output = document.getElementById("demo");
-	var peepee = slider.value
-	output.innerHTML = slider.value; // Display the default slider value
+//	var slider = document.getElementById("myRange");
+//	var output = document.getElementById("demo");
+//	output.innerHTML = slider.value; // Display the default slider value
 	
 	// Update the current slider value (each time you drag the slider handle)
-	slider.oninput = function() {
-		peepee = this.value;
-		output.innerHTML = peepee;
-		load_js();
-	} 
-</script>
-<script>
+//	slider.oninput = function() {
+//		peepee = this.value;
+//		output.innerHTML = peepee;
+//		load_js();
+//	} 
+
+	var peepee = "18650101";
+	var buttonText = document.getElementById("shit");
+	const days = [];
+
+	function playThrough()
+	{
+		for (let i = 0; i < days.length; i++) 
+		{
+			setTimeout(() => {	
+				buttonText.innerHTML = days[i]; 
+				peepee = days[i];
+				load_js();
+			}, 500 * i);
+		}
+	}
+
 	function getDates (startDate, endDate) {
-	  const dates = []
-	  let currentDate = startDate
-	  const addDays = function (days) {
-	    const date = new Date(this.valueOf())
-	    date.setDate(date.getDate() + days)
-	    return date
-	  }
-	  while (currentDate <= endDate) {
-	    dates.push(currentDate)
-	    currentDate = addDays.call(currentDate, 1)
-	  }
-	  return dates
+		const dates = []
+		let currentDate = startDate
+		const addDays = function (days) {
+			const date = new Date(this.valueOf())
+			date.setDate(date.getDate() + days)
+			return date
+		}
+		while (currentDate <= endDate) {
+			dates.push(currentDate)
+			currentDate = addDays.call(currentDate, 1)
+		}
+		return dates
 	}
 	
 	// Usage
-	const dates = getDates(new Date(2013, 10, 22), new Date(2013, 11, 25))
-	console.log(dates[9])
-	var x = dates[9];
-	var y = x.getFullYear().toString();
-	var m = (x.getMonth() + 1).toString();
-	var d = x.getDate().toString();
-	(d.length == 1) && (d = '0' + d);
-	(m.length == 1) && (m = '0' + m);
-	var yyyymmdd = y + m + d;
-	console.log(yyyymmdd);
-//	dates.forEach(function (date) {
-//	  console.log(date)
-//	})
+	const dates = getDates(new Date(1865, 0, 1), new Date(1865, 0, 31))
+
+	dates.forEach(function (date) {
+		var x = date;
+		var y = x.getFullYear().toString();
+		var m = (x.getMonth() + 1).toString();
+		var d = x.getDate().toString();
+		(d.length == 1) && (d = '0' + d);
+		(m.length == 1) && (m = '0' + m);
+		var yyyymmdd = y + m + d;
+		days.push(yyyymmdd);
+	})
 </script>
 
